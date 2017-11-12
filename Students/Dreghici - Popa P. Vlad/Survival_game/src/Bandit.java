@@ -2,6 +2,6 @@
 public class Bandit extends NPC{
 
 	public Bandit() {
-		super(100,10);
+		super("Bandit",100,10);
 	}
 }

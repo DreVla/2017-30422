@@ -1,37 +1,19 @@
 
 public class Zombie extends Unit {
 	
-	private int Hp;
-	private int Damage;
 	
-	public Zombie(int hp, int damage) {
-		this.Hp = hp;
-		this.Damage = damage;
-	}
-
-	public int getHp() {
-		return Hp;
-	}
-
-	public void setHp(int hp) {
-		Hp = hp;
-	}
-
-	public int getDamage() {
-		return Damage;
-	}
-
-	public void setDamage(int damage) {
-		Damage = damage;
+	
+	public Zombie(String name,int hp, int damage) {
+		super(name,hp,damage);
 	}
 
 	public void Attack(Unit unit1, Unit unit2) {
-		System.out.println(unit1.name + " attacks " + unit2.name + " for " + this.Damage + " damage");
+		System.out.println(unit1.getName() + " attacks " + unit2.getName() + " for " + unit1.getDamage() + " damage");
 	}
 	
-	public int TakeDamage(int damage) {
-		System.out.println(this.name + " takes " + damage + " damage and has " + (this.Hp - damage) + " hp left");
-		return this.Hp = this.Hp - damage;
+	public void TakeDamage(Unit unit,int damage) {
+		System.out.println(unit.getName() + " takes " + damage + " damage and has " + (unit.getHp() - damage) + " hp left");
+		unit.setHp(unit.getHp() - damage);
 	}
 	
 	

@@ -1,17 +1,13 @@
 
 public class Survivor extends Unit {
 
-	private int Hp;
-	private int Damage;
 	private int Hunger;
 	private int Thirst;
 	private int Energy;
 	private int Sickness;
 	
 	public Survivor(String name) {
-		this.name = name;
-		this.Hp = 100;
-		this.Damage = 10;
+		super(name,100,10);
 		this.Hunger = 70;
 		this.Thirst = 70;
 		this.Energy = 70;
@@ -35,28 +31,20 @@ public class Survivor extends Unit {
 		Energy = energy;
 	}
 
-	public int getHp() {
-		return Hp;
-	}
-
-	public void setHp(int hp) {
-		Hp = hp;
-	}
-
-	public int getDamage() {
-		return Damage;
-	}
-
-	public void setDamage(int damage) {
-		Damage = damage;
-	}
-
 	public int getHunger() {
 		return Hunger;
 	}
 
+	public void setHunger(int hunger) {
+		Hunger = hunger;
+	}
+
+	public void setThirst(int thirst) {
+		Thirst = thirst;
+	}
+
 	public void increaseHunger(int hunger) {
-		this.Hunger = this.Hunger + hunger;
+		if(this.Hunger < 100 - hunger) this.Hunger = this.Hunger + hunger;
 	}
 
 	public int getThirst() {
@@ -64,32 +52,32 @@ public class Survivor extends Unit {
 	}
 
 	public void increaseThirst(int thirst) {
-		this.Thirst = this.Thirst + thirst;
+		if(this.Thirst < 100 - thirst ) this.Thirst = this.Thirst + thirst;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
 	public void LoseEnergy(int value) {
 		this.Energy = this.Energy - value;
+	}
+	
+	public void increaseHp(int hp) {
+		if(this.getHp() < 100 - hp) this.setHp(this.getHp() + hp);
 	}
 	
 	public void LoseStats(int value) {
 		this.Hunger = this.Hunger - value;
 		this.Thirst = this.Thirst - value;
+		this.Energy = this.Energy + 5;
+	}
+	public void increaseSickness(int value) {
+		this.Sickness = this.Sickness + value;
 	}
 	
 	public void Attack(Unit unit1, Unit unit2) {
-		System.out.println(unit1.name + " attacks " + unit2.name + " for " + this.Damage + " damage");
+		System.out.println(unit1.getName() + " attacks " + unit2.getName() + " for " + unit1.getDamage() + " damage");
 	}
 	
-	public int TakeDamage(int damage) {
-		System.out.println(this.name + " takes " +damage + " damage and has " + (this.Hp - damage) + " hp left");
-		return this.Hp = this.Hp - damage;
+	public void TakeDamage(Unit unit,int damage) {
+		System.out.println(unit.getName() + " takes " + damage + " damage and has " + (unit.getHp() - damage) + " hp left");
+		unit.setHp(unit.getHp() - damage);
 	}
 }
