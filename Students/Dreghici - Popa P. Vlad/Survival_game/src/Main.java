@@ -275,9 +275,104 @@ public class Main {
 	}
 
 	public static void Hunt(Survivor Player) {
-		int i,j;
+		int i,j=1,action,combat,chance;
 		
+		System.out.println("You chose to go hunting...\n");
+		promptEnter();
+		Random random = new Random();
+		i = random.nextInt(3)+1;
+		switch(i) {
+		case 1:{
+			System.out.println("As you walk through the wasteland you see a wild boar. It looks like the boar did not spot you yet. How do you proceed?\n"
+					+ "1: Sneak upon it and try to kill him\n2: Run for it and hope you get him");
+			action = new Scanner(System.in).nextInt();
+			if(action == 1) {
+				System.out.println("You carefully aproach the boar...");
+				promptEnter();
+				chance = chance();
+				if(chance>3) {
+					System.out.println("You succesfully kill the boar. You gather all the meat you can and eat it. Your hunger increases with 40 but you become sick. +30 sickness");
+					Player.increaseHunger(40);
+					Player.setSickness(Player.getSickness() + 30);
+				}
+				else {
+					System.out.println("You scared the boar and it ran awway!");
+					promptEnter();
+				}
+			}
+			else if(action == 2) {
+				System.out.println("You rush for the boar!");
+				promptEnter();
+				chance = chance();
+				if(chance >7) {
+					System.out.println("You succesfully kill the boar. You gather all the meat you can and eat it. Your hunger increases with 40 but you become sick. +30 sickness");
+					Player.increaseHunger(40);
+					Player.setSickness(Player.getSickness() + 30);
+				}
+				else {
+					System.out.println("You scared the boar and it ran away!");
+					promptEnter();
+				}
+			}
+			
+			break;
+		}
 		
+		case 2:{
+			System.out.println("You reach a forest. As you look through the trees you spot a wild deer. How do you proceed?\n"
+					+ "1: Sneak and try to kill it\n2: Run for it and hope you kill it");
+			action = new Scanner(System.in).nextInt();
+			if(action == 1) {
+				System.out.println("You sneak through the trees in atempt to kill it.");
+				promptEnter();
+				chance = chance();
+				if(chance>8) {
+					System.out.println("You succesfully reach the deer and kill it! You cut as much meat as you can carry. Your hunger increases with 50 but you get sick. +30 sickness");
+					Player.setSickness(Player.getSickness() + 30);
+					Player.increaseHunger(50);
+				}
+				else {
+					System.out.println("You scare the deer! It runs away.");
+				}
+			if(action == 2) {
+				System.out.println("You run for the deer in hope you kill it!");
+				promptEnter();
+				chance = chance();
+				if(chance == 10) {
+					System.out.println("You succesfully reach the deer and kill it! You cut as much meat as you can carry. Your hunger increases with 50 but you get sick. +30 sickness");
+					Player.setSickness(Player.getSickness() + 30);
+					Player.increaseHunger(50);
+				}
+				else {
+					System.out.println("You scared the deer and it ran away...");
+					promptEnter();
+					
+				}
+			}
+			}
+			
+			break;
+		}
+		
+		case 3:{
+			Unit tank1 = new TankZombie();
+			System.out.println("As you walk through the wasteland you can't see any animals around. You decide to lay down for a couple of seconds.\n");
+			promptEnter();
+			System.out.println("As you rest you hear a weird sound from behind you. You turn around to see a Tank Zombie\n"
+					+ "You start fighting with it!");
+			promptEnter();
+			combat = Battle(Player,tank1,4);
+			if(combat == 0) {
+				break;
+			}
+			else if(combat == 1) {
+				System.out.println("After you defeat the Tank Zombie you lay down, exhausted. You lose 10 energy...");
+				Player.setEnergy(Player.getEnergy() - 10);
+			}
+			
+			break;
+		}
+		}
 	}
 	
 
@@ -315,15 +410,15 @@ public class Main {
 				}
 			}
 			promptEnter();
-			if(Player.getEnergy() <= 0 || Player.getHp() <= 0 || Player.getHunger() <= 0 || Player.getThirst() <= 0) break;
+			if(Player.getEnergy() <= 0 || Player.getHp() <= 0 || Player.getHunger() <= 0 || Player.getThirst() <= 0 || Player.getSickness() >=100) break;
 			System.out.println("\nAs the day passes you lose 10 thirst and hunger and recover 5 energy!");
 			Player.LoseStats(10);
-			if(Player.getEnergy() <= 0 || Player.getHp() <= 0 || Player.getHunger() <= 0 || Player.getThirst() <= 0) break;
+			if(Player.getEnergy() <= 0 || Player.getHp() <= 0 || Player.getHunger() <= 0 || Player.getThirst() <= 0 || Player.getSickness() >=100) break;
 			Status(Player);
 			System.out.println("\nYou have " + (days-1) + " day(s) left..");
 			}
 		
-		if(Player.getEnergy() <= 0 ||Player.getHp() <= 0 || Player.getHunger() <= 0 || Player.getThirst() <= 0) {
+		if(Player.getEnergy() <= 0 ||Player.getHp() <= 0 || Player.getHunger() <= 0 || Player.getThirst() <= 0 || Player.getSickness() >=100) {
 			Status(Player);
 			System.out.println("You have died! GAME OVER!");
 		}
